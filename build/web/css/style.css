@@ -1,0 +1,49 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 19 May 2025, 10:37:16 pm
+    Author     : User
+*/
+
+/* Custom Hotel-Themed Background Colors */
+.bg-primary {
+    background-color: #2C3E50 !important; /* Midnight Blue */
+}
+
+.bg-secondary {
+    background-color: #D4AF37; /* Gold */
+}
+
+.bg-success {
+    background-color: #8B5E3C !important; /* Warm Brown (used as success tone) */
+}
+
+.bg-danger {
+    background-color: #800000; /* Classic Red for errors */
+}
+
+.bg-warning {
+    background-color: #F4A261 !important; /* Coral/Peach for warnings */
+}
+
+.bg-info {
+    background-color: #00796B !important; /* Teal Blue for information */
+}
+
+.bg-light {
+    background-color: #F8F4EA !important; /* Ivory/Cream */
+}
+
+.bg-dark {
+    background-color: #333333 !important; /* Charcoal */
+}
+
+.bg-white {
+    background-color: #FFFFFF !important; /* Standard white */
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}

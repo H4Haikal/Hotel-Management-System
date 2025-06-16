@@ -1,0 +1,216 @@
+/* === COLOR VARIABLES === */
+:root {
+  /* Primary Theme */
+  --primary-main: #2A4D9B;
+  --primary-light: #4B6FC3;
+  --primary-dark: #1C3872;
+
+  /* Accent Colors */
+  --accent-gold: #D4AF37;
+  --accent-gold-light: #F4E3A7;
+
+  /* Neutral Backgrounds */
+  --background-main: #F8F6F0;
+  --background-card: #FFFFFF;
+  --background-light: #F1F1F1;
+
+  /* Text Colors */
+  --text-main: #2F3E46;
+  --text-secondary: #6C757D;
+  --text-muted: #ADB5BD;
+
+  /* Status Colors */
+  --success-main: #28A745;
+  --success-light: #C8F7C5;
+
+  --error-main: #DC3545;
+  --error-light: #F8D7DA;
+
+  --warning-main: #FFC107;
+  --warning-light: #FFF3CD;
+
+  --info-main: #20C997;
+  --info-light: #D1F0EA;
+
+  /* Form Elements */
+  --input-border: #CED4DA;
+  --input-focus: #2A4D9B;
+  --input-bg: #FFFFFF;
+}
+
+/* === BASE STYLES === */
+body {
+  margin: auto;
+  font-family: "Poetsen One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: var(--background-main);
+  color: var(--text-main);
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+/* === NAVBAR === */
+.navbar {
+  background-color: var(--primary-main);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* === BUTTONS === */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--primary-main);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-secondary {
+  background-color: var(--accent-gold);
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-gold-light);
+}
+
+/* === CARDS === */
+.card {
+  background-color: var(--background-card);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+/* === ALERTS === */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: var(--success-light);
+  color: var(--success-main);
+}
+
+.alert-error {
+  background-color: var(--error-light);
+  color: var(--error-main);
+}
+
+.alert-warning {
+  background-color: var(--warning-light);
+  color: var(--warning-main);
+}
+
+.alert-info {
+  background-color: var(--info-light);
+  color: var(--info-main);
+}
+
+/* === TABLES === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--background-card);
+  margin-bottom: 1rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  border: 1px solid var(--input-border);
+  text-align: left;
+}
+
+thead {
+  background-color: var(--primary-main);
+  color: white;
+}
+
+/* === FORMS === */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  font-size: 1rem;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--input-focus);
+  outline: none;
+}
+
+/* === UTILITY CLASSES === */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-2 { margin-bottom: 2rem; }
+
+.p-1 { padding: 1rem; }
+.p-2 { padding: 2rem; }
+
+.rounded {
+  border-radius: 10px;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
