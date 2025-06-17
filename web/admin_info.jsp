@@ -80,7 +80,7 @@
                 </div>
 
                 <a href="update.jsp?id=<%= id%>" class="btn btn-sm btn-warning me-2">Update</a>
-<!--                <a href="delete.jsp?id=<%= id%>" class="btn btn-sm btn-danger me-2">Delete</a>-->
+                <a href="delete.jsp?id=<%= id%>" class="btn btn-sm btn-danger me-2">Delete</a>
                 <a href="profile.jsp" class="btn btn-sm btn-primary me-2">Back</a>
             </form>
         </div>

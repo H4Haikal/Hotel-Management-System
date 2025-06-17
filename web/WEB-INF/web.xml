@@ -40,7 +40,14 @@
         <servlet-name>AssignTaskServlet</servlet-name>
         <servlet-class>hotel.management.AssignTaskServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>DeleteReservationServlet</servlet-name>
+        <servlet-class>hotel.management.DeleteReservationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateReservationServlet</servlet-name>
+        <servlet-class>HMS.Payment.UpdateReservationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
@@ -86,8 +93,15 @@
         <servlet-name>SubmitTaskStatusServlet</servlet-name>
         <url-pattern>/SubmitTaskStatusServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteReservationServlet</servlet-name>
+        <url-pattern>/DeleteReservationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateReservationServlet</servlet-name>
+        <url-pattern>/UpdateReservationServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
-        
         <session-timeout>
             30
         </session-timeout>
@@ -95,5 +109,4 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
-
 </web-app>

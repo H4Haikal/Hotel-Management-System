@@ -34,7 +34,6 @@
         <div class="main-content">
             <div class="container">
                 <h2 class="mb-4">Update Housekeeping Task Status</h2>
-                <p>Welcome, <strong><%= adminName%></strong></p>
 
                 <%
                     HKDAO dao = new HKDAO();

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : loginAction
-    Created on : 11 May 2025, 10:49:21 pm
-    Author     : User
---%>
-
 <%@ page import="java.sql.*, hotel.management.DBConnection" %>
 <%
     String username = request.getParameter("username");
@@ -18,11 +12,13 @@
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
+            // Successful login
             session.setAttribute("admin", username);
             session.setAttribute("staffID", rs.getInt("admin_id"));
-            session.setAttribute("staffName", rs.getString("fullname"));  // ? make sure your table has this column
+            session.setAttribute("staffName", rs.getString("fullname"));  // Ensure this column exists
             response.sendRedirect("main.jsp");
-        
+        } else {
+            // Failed login
             response.sendRedirect("login.jsp?error=1");
         }
 
@@ -30,6 +26,7 @@
         stmt.close();
         conn.close();
     } catch (Exception e) {
-        out.println("Login error: " + e.getMessage());
+        e.printStackTrace();
+        response.sendRedirect("login.jsp?error=1");
     }
 %>

@@ -48,6 +48,13 @@
 
         <div class="main-content">
             <div class="container">
+                <% if (request.getParameter("msg") != null) {%>
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <%= request.getParameter("msg")%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <% }%>
+
                 <h2 class="mb-4"><i class="bi bi-table"></i> Reservation Records</h2>
 
                 <!-- Filter Buttons -->
@@ -77,6 +84,7 @@
                             <th>Room Type</th>
                             <th>Room No</th>
                             <th>Status</th>
+                            <th>Action</th> <%-- Newly added for Updating and deleting--%>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,6 +114,24 @@
                             <td><%= rs.getString("roomType")%></td>
                             <td><%= rs.getInt("roomNo")%></td>
                             <td><%= rs.getString("status")%></td>
+                            <td>
+                                <% String status = rs.getString("status"); %>
+                                <% if (!"checked-in".equalsIgnoreCase(status) && !"checked-out".equalsIgnoreCase(status)) {%>
+                                <a href="updateReservation.jsp?reservationID=<%= rs.getString("reservationID")%>" class="btn btn-sm btn-warning me-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <form method="post" action="DeleteReservationServlet" style="display:inline;" onsubmit="return confirm('Delete this reservation?')">
+                                    <input type="hidden" name="reservationID" value="<%= rs.getString("reservationID")%>">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                                <% } else { %>
+                                <span class="text-muted">-</span>
+                                <% } %>
+                            </td>
+
+
                         </tr>
                         <%
                                 }

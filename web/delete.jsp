@@ -1,11 +1,6 @@
-<%-- 
-    Document   : delete
-    Created on : 11 May 2025, 11:01:02 pm
-    Author     : User
---%>
-
 <%@ page import="java.sql.*, hotel.management.DBConnection" %>
 <%@ page session="true" %>
+
 <%
     String admin = (String) session.getAttribute("admin");
     if (admin == null) {
@@ -13,31 +8,39 @@
         return;
     }
 
-    if (request.getMethod().equals("POST")) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM admin WHERE username=?");
-            stmt.setString(1, admin);
-            stmt.executeUpdate();
-            session.invalidate();
-            response.sendRedirect("login.jsp?deleted=true");
+    // Get admin ID from URL parameter
+    String idParam = request.getParameter("id");
+    int adminID = 0;
+
+    try {
+        if (idParam != null) {
+            adminID = Integer.parseInt(idParam);
+        } else {
+            out.println("<div class='alert alert-danger'>No admin ID provided.</div>");
             return;
-        } catch (Exception e) {
-            out.println("Delete error: " + e.getMessage());
         }
-    }
-%>
-<%
-    if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("login.jsp");
+    } catch (NumberFormatException e) {
+        out.println("<div class='alert alert-danger'>Invalid admin ID.</div>");
         return;
     }
 
-    // Prevent caching
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    response.setHeader("Pragma", "no-cache");
-    response.setDateHeader("Expires", 0);
+    if ("POST".equalsIgnoreCase(request.getMethod())) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM admin WHERE admin_id=?");
+            stmt.setInt(1, adminID);
+            stmt.executeUpdate();
+
+            session.invalidate(); // logout the user
+            response.sendRedirect("login.jsp?deleted=true");
+            return;
+
+        } catch (Exception e) {
+            out.println("<div class='alert alert-danger'>Delete error: " + e.getMessage() + "</div>");
+        }
+    }
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,9 +61,9 @@
             <h3>Delete Admin Account</h3>
             <p>Are you sure you want to delete your account?</p>
             <form method="post">
+                <input type="hidden" name="id" value="<%= adminID%>"/>
                 <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                <% int id = Integer.parseInt(request.getParameter("id")); %>
-                <a href="admin_info.jsp?id=<%= id%>" class="btn btn-secondary">Cancel</a>
+                <a href="admin_info.jsp?id=<%= adminID%>" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </body>
