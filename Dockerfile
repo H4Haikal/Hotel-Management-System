@@ -5,7 +5,7 @@ FROM tomcat:9.0-jdk17
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy your app into ROOT folder of Tomcat
-COPY ./ /usr/local/tomcat/webapps/ROOT/
+COPY ./src/main/webapp/ /usr/local/tomcat/webapps/index.html/
 
 EXPOSE 8080
 
