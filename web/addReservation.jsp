@@ -1,9 +1,3 @@
-<%-- 
-    Document   : addReservation
-    Created on : 25 May 2025, 5:25:18 pm
-    Author     : User
---%>
-
 <%@page import="java.sql.*, java.util.*, java.time.*, java.time.format.*, hotel.management.DBConnection"%>
 <%@page session="true" contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -20,7 +14,6 @@
     Connection conn = null;
     String message = "";
 
-    // ✅ Step 4: Validate date
     try {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime checkIn = LocalDateTime.parse(checkInDateStr, formatter);
@@ -33,14 +26,7 @@
             request.getRequestDispatcher("reservationPage.jsp").forward(request, response);
             return;
         }
-    } catch (DateTimeParseException e) {
-        message = "Invalid date format submitted. Please reselect your dates.";
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("reservationPage.jsp").forward(request, response);
-        return;
-    }
 
-    try {
         if (selectedRoomNoStr == null || selectedRoomNoStr.trim().isEmpty()) {
             message = "Error: No room selected. Please select a room.";
             request.setAttribute("message", message);
@@ -53,18 +39,38 @@
         conn = DBConnection.getConnection();
         conn.setAutoCommit(false);
 
+        // Check if room is available for that date
+        PreparedStatement overlapCheck = conn.prepareStatement(
+                "SELECT * FROM reservation WHERE roomNo = ? AND "
+                + "( (checkInDate <= ? AND checkOutDate > ?) OR (checkInDate < ? AND checkOutDate >= ?) OR (checkInDate >= ? AND checkOutDate <= ?) )"
+        );
+        overlapCheck.setInt(1, selectedRoomNo);
+        overlapCheck.setString(2, checkInDateStr);
+        overlapCheck.setString(3, checkInDateStr);
+        overlapCheck.setString(4, checkOutDateStr);
+        overlapCheck.setString(5, checkOutDateStr);
+        overlapCheck.setString(6, checkInDateStr);
+        overlapCheck.setString(7, checkOutDateStr);
+
+        ResultSet conflict = overlapCheck.executeQuery();
+        if (conflict.next()) {
+            message = "Room is already booked during selected dates. Please choose another room or date.";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("reservationPage.jsp").forward(request, response);
+            return;
+        }
+
         // Generate guest ID
         Statement st = conn.createStatement();
         ResultSet rsGuest = st.executeQuery("SELECT MAX(guestID) FROM guest");
 
-        String guestID = "G001"; // default
+        String guestID = "G001";
         if (rsGuest.next() && rsGuest.getString(1) != null) {
-            String lastID = rsGuest.getString(1); // e.g., G005
-            int num = Integer.parseInt(lastID.substring(1)); // get 5
-            guestID = "G" + String.format("%03d", num + 1);  // G006
+            String lastID = rsGuest.getString(1);
+            int num = Integer.parseInt(lastID.substring(1));
+            guestID = "G" + String.format("%03d", num + 1);
         }
 
-        // Insert guest
         PreparedStatement guestStmt = conn.prepareStatement(
                 "INSERT INTO guest (guestID, guestName, guestAddr, guestPhone, guestEmail) VALUES (?, ?, ?, ?, ?)"
         );
@@ -75,69 +81,45 @@
         guestStmt.setString(5, guestEmail);
         guestStmt.executeUpdate();
 
-        // Check if the selected room is actually available and of correct type
-        PreparedStatement roomCheckStmt = conn.prepareStatement(
-                "SELECT roomNo FROM room WHERE roomNo = ? AND roomType = ? AND roomStatus = 'available'"
-        );
-        roomCheckStmt.setInt(1, selectedRoomNo);
-        roomCheckStmt.setString(2, roomType);
-        ResultSet rsRoom = roomCheckStmt.executeQuery();
-
-        if (rsRoom.next()) {
-            // Generate reservation ID
-            ResultSet rsRes = st.executeQuery("SELECT MAX(reservationID) FROM reservation");
-            String reservationID = "R001";
-            if (rsRes.next() && rsRes.getString(1) != null) {
-                int num = Integer.parseInt(rsRes.getString(1).substring(1));
-                reservationID = "R" + String.format("%03d", num + 1);
-            }
-
-            // Insert reservation
-            PreparedStatement resStmt = conn.prepareStatement(
-                    "INSERT INTO reservation (reservationID, guestID, checkInDate, checkOutDate, roomType, roomNo, status) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, 'pending')"
-            );
-            resStmt.setString(1, reservationID);
-            resStmt.setString(2, guestID);
-            resStmt.setString(3, checkInDateStr);
-            resStmt.setString(4, checkOutDateStr);
-            resStmt.setString(5, roomType);
-            resStmt.setInt(6, selectedRoomNo);
-            resStmt.executeUpdate();
-
-            // Update room status to 'pending'
-            PreparedStatement updateRoomStmt = conn.prepareStatement(
-                    "UPDATE room SET roomStatus = 'pending' WHERE roomNo = ?"
-            );
-            updateRoomStmt.setInt(1, selectedRoomNo);
-            updateRoomStmt.executeUpdate();
-
-            message = "Reservation added! Room " + selectedRoomNo + " assigned.";
-        } else {
-            message = "Selected room is no longer available. Please choose another room.";
-            conn.rollback();
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("reservationPage.jsp").forward(request, response);
-            return;
+        // Reservation ID
+        ResultSet rsRes = st.executeQuery("SELECT MAX(reservationID) FROM reservation");
+        String reservationID = "R001";
+        if (rsRes.next() && rsRes.getString(1) != null) {
+            int num = Integer.parseInt(rsRes.getString(1).substring(1));
+            reservationID = "R" + String.format("%03d", num + 1);
         }
 
+        PreparedStatement resStmt = conn.prepareStatement(
+                "INSERT INTO reservation (reservationID, guestID, checkInDate, checkOutDate, roomType, roomNo, status) VALUES (?, ?, ?, ?, ?, ?, 'pending')"
+        );
+        resStmt.setString(1, reservationID);
+        resStmt.setString(2, guestID);
+        resStmt.setString(3, checkInDateStr);
+        resStmt.setString(4, checkOutDateStr);
+        resStmt.setString(5, roomType);
+        resStmt.setInt(6, selectedRoomNo);
+        resStmt.executeUpdate();
+
+        PreparedStatement updateRoomStmt = conn.prepareStatement(
+                "UPDATE room SET roomStatus = 'pending' WHERE roomNo = ?"
+        );
+        updateRoomStmt.setInt(1, selectedRoomNo);
+        updateRoomStmt.executeUpdate();
+
+        message = "Reservation added successfully!";
         conn.commit();
 
     } catch (Exception e) {
         message = "Error: " + e.getMessage();
-        e.printStackTrace(); // shows full error in Tomcat logs
         if (conn != null) try {
             conn.rollback();
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
     } finally {
         if (conn != null) try {
             conn.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
-
         request.setAttribute("message", message);
         request.getRequestDispatcher("reservationPage.jsp").forward(request, response);
     }

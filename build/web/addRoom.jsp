@@ -67,7 +67,7 @@
                         <select name="roomType" class="form-select" required>
                             <option value="">-- Select Type --</option>
                             <option value="Single">Single</option>
-                            <option value="Double">Double</option>
+                            <option value="Deluxe">Deluxe</option>
                             <option value="Suite">Suite</option>
                         </select>
                     </div>
