@@ -90,7 +90,7 @@
                     </a>
                 </div>
                 <div class="col-md-3">
-                    <a href="addReservation.jsp" class="text-decoration-none">
+                    <a href="ReservationDashboard.jsp" class="text-decoration-none">
                         <div class="card text-center card-hover p-3">
                             <i class="fas fa-calendar-plus fa-2x mb-2 text-success"></i>
                             <h6>Reservation</h6>

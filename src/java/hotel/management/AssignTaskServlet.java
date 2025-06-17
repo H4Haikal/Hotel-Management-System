@@ -3,7 +3,6 @@ package hotel.management;
 import java.io.IOException;
 import java.util.*;
 import javax.servlet.*;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 

@@ -36,6 +36,11 @@
         <servlet-name>SubmitTaskStatusServlet</servlet-name>
         <servlet-class>hotel.management.SubmitTaskStatusServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AssignTaskServlet</servlet-name>
+        <servlet-class>hotel.management.AssignTaskServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
@@ -65,8 +70,8 @@
         <url-pattern>/RemovePaymentItemServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoadAssignedTaskServlet</servlet-name>
-        <url-pattern>/LoadAssignedTaskServlet</url-pattern>
+        <servlet-name>AssignTaskServlet</servlet-name>
+        <url-pattern>/AssignTaskServlet</url-pattern>
     </servlet-mapping>
     <!--    <servlet>
         <servlet-name>UpdateTaskServlet</servlet-name>

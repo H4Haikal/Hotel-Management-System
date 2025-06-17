@@ -30,7 +30,7 @@
             <div class="container">
                 <h2 class="mb-4"><i class="bi bi-person-plus"></i> Assign Task to Housekeeping Staff</h2>
 
-                <form action="AssignedTaskServlet" method="post" class="bg-white p-4 rounded shadow-sm">
+                <form action="AssignTaskServlet" method="post" class="bg-white p-4 rounded shadow-sm">
                     <!-- Staff ID Dropdown -->
                     <div class="mb-3">
                         <label for="staffID" class="form-label">Select Staff</label>
