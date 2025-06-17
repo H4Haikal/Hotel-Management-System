@@ -25,7 +25,7 @@
                 min-height: 100vh;
             }
             h2 {
-                margin-top: 60px;
+/*                margin-top: 40px;*/
             }
             .table thead th {
                 text-align: center;

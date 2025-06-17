@@ -1,0 +1,58 @@
+1. Register
+	Username: Naim
+	Password: Naim123
+
+2. Login 
+	Username: Naim 
+	Password: Naim122 / Naim123
+	- Incorrect any, error keluar
+	- simpan username, adminID dalam session
+	- Berjaya --> Main.jsp
+
+3. Main.jsp
+	- display front page, ada shortcuts.
+
+4. Check In
+	Reservation ID:
+		- Pending (valid)
+		- checked in (invalid)
+		- checked out (invalid)
+	update table Reservation based on ReservationID to change status, check in and check out date
+	
+5. Check out
+	Reservation ID: 
+		- checked in (valid)
+		- checked out (invalid)
+		- pending (invalid)
+
+6. Reservation
+	Add Reservation
+		- xleh submit empty field,
+		- date validation:
+			- Date tak leh in the past
+			- Date tak leh masa other guest book,
+		EG. 
+			1st Reservation: 
+				James Arthur, Standard, 105, 18/06/2025 09:00 am, 21/06/2025 10:00 am
+			2nd Reservation:
+				Lady Gaga, Standard, 105, 19/06/2025 10:00 am, 22/06/2025 
+			
+			1st Reservation: 
+				Frederick Choi , Deluxe, 104, 18/06/2025 09:00 am, 21/06/2025 10:00 am
+			2nd Reservation:
+				Alisa, Deluxe, 104, 22/06/2025 10:00 am, 23/06/2025 
+
+	View Reservation
+		- Get data from table reservation, guest, room
+		- can sort by reservation status.
+
+5. View Room
+	Displaying room and add new room to the database
+
+6. View guest
+	Display guest info, bole search by name
+
+7. Payment
+	
+
+		
