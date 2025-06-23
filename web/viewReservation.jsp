@@ -84,7 +84,7 @@
                             <th>Room Type</th>
                             <th>Room No</th>
                             <th>Status</th>
-                            <th>Action</th> <%-- Newly added for Updating and deleting--%>
+                            <th>Action</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -123,7 +123,7 @@
                                 <form method="post" action="DeleteReservationServlet" style="display:inline;" onsubmit="return confirm('Delete this reservation?')">
                                     <input type="hidden" name="reservationID" value="<%= rs.getString("reservationID")%>">
                                     <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash"></i> Cancel
                                     </button>
                                 </form>
                                 <% } else { %>
